@@ -1,6 +1,7 @@
-package com.example.desafiodropbox.events.resources;
+package com.example.desafiodropbox.contract;
 
-import com.example.desafiodropbox.events.models.User;
+import com.example.desafiodropbox.impl.UserFacade;
+import com.example.desafiodropbox.models.User;
 import com.example.desafiodropbox.repository.Repository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +21,7 @@ import java.util.Optional;
 public class UserController {
 
   @Autowired
-  private Repository repository;
+  private UserFacade userFacade;
 
 
   @GetMapping("/users")
@@ -31,8 +32,8 @@ public class UserController {
     @ApiResponse(code = 500, response = User.class, message = "Server internal error, please contact support")
   })
   @ResponseBody
-  public List<User> getUsers(){
-    return repository.findAll();
+  public List<User> getUsers() {
+    return userFacade.getAllUsers ();
   }
 
   @GetMapping("/user/{id}")
@@ -43,7 +44,7 @@ public class UserController {
     @ApiResponse(code = 500, response = User.class, message = "Server internal error, please contact support")
   })
   public Optional<User> getUserById(@PathVariable int id){
-    return repository.findById(id);
+    return userFacade.getUserById ( id );
   }
 
   @PostMapping("/user")
@@ -54,8 +55,7 @@ public class UserController {
     @ApiResponse(code = 500, response = User.class, message = "Server internal error, please contact support")
   })
   public String newUser(@RequestBody User user){
-    repository.save(user);
-    return "Novo usuário adicionado: " + user.getName();
+    return userFacade.saveUser ( user );
   }
 
   @PutMapping("/user/{id}")
@@ -67,8 +67,7 @@ public class UserController {
   })
   public String updateUser(@PathVariable int id,
                            @RequestBody @Valid User user){
-    repository.save(user);
-    return "Usuário com o id " + id + " foi editado com sucesso!";
+    return userFacade.updateUser (id, user );
   }
 
   @DeleteMapping("/user/{id}")
@@ -79,8 +78,7 @@ public class UserController {
     @ApiResponse(code = 500, response = User.class, message = "Server internal error, please contact support")
   })
   public String deleteUser(@PathVariable int id){
-    repository.deleteById(id);
-    return "Usuário com o id " + id + " deletado.";
+    return userFacade.deleteUser ( id );
   }
 
 }

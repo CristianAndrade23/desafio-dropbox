@@ -23,7 +23,7 @@ public class SwaggerConfig {
   public Docket productApi() {
     return new Docket(DocumentationType.SWAGGER_2)
       .select()
-      .apis(RequestHandlerSelectors.basePackage("com.example.desafiodropbox.events"))
+      .apis(RequestHandlerSelectors.basePackage("com.example.desafiodropbox.contract"))
       .paths(regex("/v1.*"))
       .build()
       .apiInfo(metaInfo());

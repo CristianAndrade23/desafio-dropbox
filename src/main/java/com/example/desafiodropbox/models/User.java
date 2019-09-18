@@ -1,4 +1,4 @@
-package com.example.desafiodropbox.events.models;
+package com.example.desafiodropbox.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
